@@ -58,7 +58,10 @@ public class Updater {
 							URL downloadUrl = URI.create(url).toURL();
 					        InputStream in = downloadUrl.openStream(); 
 					        Files.copy(in, location.toPath(), StandardCopyOption.REPLACE_EXISTING);
-					        System.out.println("Rename: "+location.renameTo(new File(downloadLoc+finalName)));
+					        //now run the Updater
+					        ProcessBuilder pb = new ProcessBuilder("java -jar Updater.jar", downloadLoc+tempName, downloadLoc+finalName,versionNum);
+					        pb.start();
+					        System.exit(0);
 						}
 					}
 					
@@ -68,6 +71,7 @@ public class Updater {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error updating: "+e.getMessage());
 		}
 	}
 }
